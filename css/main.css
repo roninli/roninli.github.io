@@ -1246,7 +1246,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a7676c;
+  background: #50c1ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2738,4 +2738,9 @@ ul.breadcrumb li + li:last-child {
   .pagination {
     margin: 8px 0 0;
   }
+}
+.site-brand-container {
+  background-image: url("/images/cbl.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
