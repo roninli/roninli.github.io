@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>dp题-串</title>
+      <link href="/2021/02/01/dp%E9%A2%98-%E4%B8%B2/"/>
+      <url>/2021/02/01/dp%E9%A2%98-%E4%B8%B2/</url>
+      
+        <content type="html"><![CDATA[<hr><a id="more"></a><p>[问题传送门][<a href="https://ac.nowcoder.com/acm/contest/9981/A]" target="_blank" rel="noopener">https://ac.nowcoder.com/acm/contest/9981/A]</a></p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>我们可以定义一个dp[n] [3]来解决这个问题；</p><p>dp[i] [0]表示长度为i且不含u字符有多少种方案数；</p><p>dp[i] [1]表示长度为i且含有u字符并且u字符后面不含s字符的方案数；</p><p>dp[i] [2]表示长度为i且含有us子序列的方案数。</p><h5 id="状态转移"><a href="#状态转移" class="headerlink" title="状态转移"></a>状态转移</h5><p>dp[i] [0]=dp[i-1] [0]*25; 在长度为i-1且不含u字符的序列末尾添加除u字符以外的小写字符就可以得到长度为i且不含u字符有多少种方案数；</p><p>dp[i] [1]=dp[i-1] [0]+dp[i-1] [1]*25;来源：长度为i-1不含u字符的序列末尾加上一个u字符 或者在长度为i-1本来就含有u字符的情况下末尾添加出s字符以外的字符；</p><p>dp[i] [2]=dp[i-1] [2]*26+dp[i-1] [1];来源：长度为i-1含有u字符的序列末尾补上一个s字符 或者长度为i-1并且已经含有us子串的序列末尾随便补上一个字符；</p><p>sum=dp[2] [2]+dp[3] [2]+….+dp[ n] [2]即为所求；</p><h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><p>dp[1] [0]=25;一个字符时不含u字符的情况有25种</p><p>dp[1] [1]=25;含有u字符的情况只有一种</p><h5 id="代码如下"><a href="#代码如下" class="headerlink" title="代码如下"></a>代码如下</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long </span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ms=<span class="number">1e6</span>+<span class="number">3</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> mod=<span class="number">1e9</span>+<span class="number">7</span>; </span><br><span class="line">ll dp[ms][<span class="number">2</span>][<span class="number">2</span>]; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">ll i,j;</span><br><span class="line">ll n;</span><br><span class="line"><span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">ll ans=<span class="number">0</span>;</span><br><span class="line">dp[<span class="number">1</span>][<span class="number">0</span>][<span class="number">0</span>]=<span class="number">25</span>;</span><br><span class="line">dp[<span class="number">1</span>][<span class="number">1</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">&#123;</span><br><span class="line">dp[i][<span class="number">0</span>][<span class="number">0</span>]=(dp[i<span class="number">-1</span>][<span class="number">0</span>][<span class="number">0</span>]*<span class="number">25</span>)%mod;</span><br><span class="line">dp[i][<span class="number">1</span>][<span class="number">0</span>]=(dp[i<span class="number">-1</span>][<span class="number">0</span>][<span class="number">0</span>]+dp[i<span class="number">-1</span>][<span class="number">1</span>][<span class="number">0</span>]*<span class="number">25</span>)%mod;</span><br><span class="line">dp[i][<span class="number">1</span>][<span class="number">1</span>]=(dp[i<span class="number">-1</span>][<span class="number">1</span>][<span class="number">1</span>]*<span class="number">26</span>+dp[i<span class="number">-1</span>][<span class="number">1</span>][<span class="number">0</span>])%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">2</span>;i&lt;=n;i++)</span><br><span class="line">&#123;</span><br><span class="line">ans+=dp[i][<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line">ans=ans%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计数dp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>操作系统</title>
       <link href="/2020/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
       <url>/2020/12/12/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
