@@ -65,7 +65,7 @@
       <link href="/2021/03/09/acm%E5%B0%8F%E6%8A%80%E5%B7%A7%E5%92%8C%E6%98%93%E9%94%99%E7%82%B9/"/>
       <url>/2021/03/09/acm%E5%B0%8F%E6%8A%80%E5%B7%A7%E5%92%8C%E6%98%93%E9%94%99%E7%82%B9/</url>
       
-        <content type="html"><![CDATA[<hr><a id="more"></a><h2 id="错误集"><a href="#错误集" class="headerlink" title="错误集"></a>错误集</h2><p>1.注意数据范围，爆int了没有用ll</p><p>2.减法要加一个mod在取模！！！</p><h2 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h2>]]></content>
+        <content type="html"><![CDATA[<hr><a id="more"></a><h2 id="错误集"><a href="#错误集" class="headerlink" title="错误集"></a>错误集</h2><p>1.注意数据范围，爆int了没有用ll</p><p>2.减法要加一个mod在取模！！！</p><h2 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h2><p>1<br>$$<br>C^k_n为奇数的情况当且仅当n&amp;k==k。<br>$$</p>]]></content>
       
       
       
