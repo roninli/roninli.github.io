@@ -11,7 +11,7 @@
   
   <title>
     
-      blog2.0 
+      2020上海icpc C.Sum of Log（数位dp） 
       
       
       |
@@ -129,19 +129,19 @@ MathJax = {
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">blog2.0</div>
+      <div class="post-title">2020上海icpc C.Sum of Log（数位dp）</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime" title="Update time"></i>
-          2022-03-23 21:31:33
+          2022-03-30 03:02:11
         </span>
         
               <span class="post-categories">
                 <i class="iconfont icon-bookmark" title="Categories"></i>
                 
                 <span class="span--category">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" title="随笔">
-                    <b>#</b> 随笔
+                  <a href="/categories/acm/" title="acm">
+                    <b>#</b> acm
                   </a>
                 </span>
                 
@@ -150,14 +150,24 @@ MathJax = {
       </div>
       <div class="markdown-body">
         <hr>
-<p>由于某些原因导致了重装系统，所以之前的博客不在了，现在又搭建了一个。</p>
+<span id="more"></span>
+
+<p><a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/9925/C">问题链接</a></p>
+<h3 id="题意"><a href="#题意" class="headerlink" title="题意:"></a>题意:</h3><p>给定X和Y，要求计算：<br>$$<br>\sum_{i&#x3D;0}^{x}\sum_{j&#x3D;[i&#x3D;0]}^{y}[ i&amp;j &#x3D;0]⌊ l o g 2 ( i + j ) + 1 ⌋<br>$$<br>[true]&#x3D;1;[false]&#x3D;0;</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>数位dp.</p>
+<p>由于i&amp;j&#x3D;0,所以(i+j)一定不会进位,log2(i+j)一定是他们的最高位1的位置.</p>
+<p>令d [len ] [liml] [limr] [lead]表示:r<br>当前长度为len,i的高位限制,j的高位限制,是否含有前导0</p>
+<p>枚举下一个数,dp一下即可.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long </span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ms=<span class="number">2e6</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> mod=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line">ll dp[<span class="number">66</span>][<span class="number">2</span>][<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> a[<span class="number">66</span>];</span><br><span class="line"><span class="type">int</span> len;</span><br><span class="line"><span class="type">int</span> b[<span class="number">66</span>];</span><br><span class="line"><span class="function">ll <span class="title">dfs</span><span class="params">(<span class="type">int</span> pos,<span class="type">int</span> liml,<span class="type">int</span> limr,<span class="type">int</span> lead)</span><span class="comment">//当前位置 x的限制 y的限制 是否含有前导0 </span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(pos==<span class="number">-1</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(dp[pos][liml][limr][lead]!=<span class="number">-1</span>)<span class="keyword">return</span> dp[pos][liml][limr][lead];<span class="comment">//记忆化搜索 </span></span><br><span class="line">	<span class="type">int</span> i,j;</span><br><span class="line">	ll ans=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=(liml?a[pos]:<span class="number">1</span>);i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;=(limr?b[pos]:<span class="number">1</span>);j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(j&amp;i)<span class="keyword">continue</span>;</span><br><span class="line">			<span class="type">int</span> cnt=<span class="number">1</span>;<span class="comment">//cnt表示最高位是几，已经有的话赋为1 </span></span><br><span class="line">			<span class="keyword">if</span>(lead&amp;&amp;(i||j))cnt=pos+<span class="number">1</span>;<span class="comment">//之前含有前导0且这一位出现了1说明这一位一定是最高位，记录下答案。 </span></span><br><span class="line">			ans=(ans+<span class="built_in">dfs</span>(pos<span class="number">-1</span>,liml&amp;&amp;(i==a[pos]),limr&amp;&amp;(j==b[pos]),lead&amp;&amp;(!i)&amp;&amp;(!j))*cnt%mod)%mod; </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dp[pos][liml][limr][lead]=ans;</span><br><span class="line">	<span class="keyword">return</span> ans%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">ll <span class="title">f</span><span class="params">(ll x,ll y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dp,<span class="number">-1</span>,<span class="built_in">sizeof</span>(dp));</span><br><span class="line">	len=<span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> i,j;</span><br><span class="line">	<span class="keyword">while</span>(x||y)</span><br><span class="line">	&#123;</span><br><span class="line">		a[len]=(x&amp;<span class="number">1</span>);</span><br><span class="line">		b[len]=(y&amp;<span class="number">1</span>);</span><br><span class="line">		x&gt;&gt;=<span class="number">1ll</span>;</span><br><span class="line">		y&gt;&gt;=<span class="number">1ll</span>;</span><br><span class="line">		len++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">dfs</span>(len<span class="number">-1</span>,<span class="literal">true</span>,<span class="literal">true</span>,<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//ios::sync_with_stdio(false);</span></span><br><span class="line">	<span class="type">int</span> i,j;</span><br><span class="line">	<span class="type">int</span> k;</span><br><span class="line">	cin&gt;&gt;k;</span><br><span class="line">	<span class="keyword">while</span>(k--)</span><br><span class="line">	&#123;</span><br><span class="line">		ll x,y;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%lld %lld&quot;</span>,&amp;x,&amp;y);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,(<span class="built_in">f</span>(x,y)<span class="number">-1</span>+mod)%mod);<span class="comment">//-1是指减去 0 0这种情况 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>我好菜啊QWQ！</p>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2020/06/24/%E5%B9%B6%E6%9F%A5%E9%9B%86/" target="_self">
+              <a href="/2022/03/30/%E4%B8%80%E4%BA%9B%E8%B6%85%E7%BA%A7%E7%AE%80%E5%8D%95%E7%9A%84%E6%95%B0%E8%AE%BA/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -166,15 +176,15 @@ MathJax = {
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime" title="Update time"></i>
-              2022-03-23 21:31:33
+              2022-03-30 03:02:11
             </span>
             
                   <span class="post-categories">
                     <i class="iconfont icon-bookmark" title="Categories"></i>
                     
                     <span class="span--category">
-                      <a href="/categories/%E9%9A%8F%E7%AC%94/" title="随笔">
-                        <b>#</b> 随笔
+                      <a href="/categories/acm/" title="acm">
+                        <b>#</b> acm
                       </a>
                     </span>
                     
@@ -183,16 +193,26 @@ MathJax = {
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2022/03/30/%E4%B8%8D%E8%A6%8162-%E6%95%B0%E4%BD%8Ddp/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
           </div>
         </div>
       
     </div>
     
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-text">题意:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a></li></ol>
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
       <div class="comments-container">
@@ -468,12 +488,12 @@ MathJax = {
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + blog2.0 + '&url=' + https%3A%2F%2Froninli.github.io%2F2022%2F03%2F23%2Fhello-world%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + 2020%E4%B8%8A%E6%B5%B7icpc%20C.Sum%20of%20Log%EF%BC%88%E6%95%B0%E4%BD%8Ddp%EF%BC%89 + '&url=' + https%3A%2F%2Froninli.github.io%2F2022%2F03%2F30%2F2020%25E4%25B8%258A%25E6%25B5%25B7icpc-C-Sum-of-Log%25EF%25BC%2588%25E6%2595%25B0%25E4%25BD%258Ddp%25EF%25BC%2589%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://roninli.github.io/2022/03/23/hello-world/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://roninli.github.io/2022/03/30/2020%E4%B8%8A%E6%B5%B7icpc-C-Sum-of-Log%EF%BC%88%E6%95%B0%E4%BD%8Ddp%EF%BC%89/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
